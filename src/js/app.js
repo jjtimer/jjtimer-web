@@ -59,6 +59,7 @@ Event.on('timer/stopped', function() {
   document.getElementById('time').innerHTML = format_time(Timer.getCurrent());
   document.getElementById('session').innerHTML =
       SessionFormatter.format(Session);
+  document.getElementById('avg').innerHTML = format_time(Session.average());
 });
 
 Keyboard.on(Keyboard.space, function() {
@@ -71,6 +72,7 @@ Keyboard.on(Keyboard.esc, function() {
   document.getElementById('time').innerHTML = "";
   document.getElementById('session').innerHTML =
       SessionFormatter.format(Session);
+  document.getElementById('avg').innerHTML = 'DNF';
 });
 
 document.onkeydown = Keyboard.handler;
