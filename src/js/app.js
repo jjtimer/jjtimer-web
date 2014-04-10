@@ -13,11 +13,37 @@ var Keyboard = (function() {
   return { on: on, handler: handler, space: 32, esc: 27 };
 })();
 
+function format_time(time) {
+  if (time < 0)
+    return 'DNF';
+
+  time = Math.round(time / 10);
+  var bits = time % 100;
+  time = (time - bits) / 100;
+  var secs = time % 60;
+  var mins = ((time - secs) / 60) % 60;
+
+  var out = [bits];
+  if (bits < 10) {
+    out.push('0');
+  }
+  out.push('.');
+  out.push(secs);
+  if (secs < 10 && mins > 0) {
+    out.push('0');
+  }
+  if (mins > 0) {
+    out.push(':');
+    out.push(mins)
+  }
+  return out.reverse().join('');
+}
+
 var SessionFormatter = (function () {
   function format(session) {
     var out = "";
     for(var i = 0; i < session.length(); ++i) {
-      out += session.at(i).time + ", ";
+      out += format_time(session.at(i).time) + ", ";
     }
     return out.substr(0, out.length - 2);
   }
@@ -25,12 +51,12 @@ var SessionFormatter = (function () {
 })();
 
 Event.on('timer/running', function() {
-  document.getElementById('time').innerHTML = Timer.getCurrent();
+  document.getElementById('time').innerHTML = format_time(Timer.getCurrent());
 });
 
 Event.on('timer/stopped', function() {
   Session.add({ time: Timer.getCurrent() });
-  document.getElementById('time').innerHTML = Timer.getCurrent();
+  document.getElementById('time').innerHTML = format_time(Timer.getCurrent());
   document.getElementById('session').innerHTML =
       SessionFormatter.format(Session);
 });
