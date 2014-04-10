@@ -18,5 +18,9 @@
   "homepage": "https://github.com/jjtimer/jjtimer-web",
   "dependencies": {
     "jjtimer-core": "git://github.com/jjtimer/jjtimer-core"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-browserify": "^0.5.0"
   }
 }
