@@ -4,10 +4,42 @@
   <title>jjtimer</title>
   <script src="../build/app.js"></script>
   <link rel="stylesheet" href="css/jjtimer.css">
+  <style type="text/css" id="user-style"></style>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 </head>
 <body>
-<div id="time"></div>
+<div id="content">
+<div id="left">
+<div id="detail" class="hide-detail"></div>
+<div id="top" class="show">
+<div id="time">ready</div>
+<div id="scramble"></div>
+<div id="stats">
+  <span>times: <span id="session-count">0</span></span>
+  <span>session average: <span id="avg">DNF</span></span>
+  <span>current average: <span id="current-avg-5">DNF</span>, <span id="current-avg-12">DNF</span></span>
+  <span>best average: <span id="best-avg-5">DNF</span>, <span id="best-avg-12">DNF</span></span>
+<a href="javascript:;" class="options">options</a>
+</div>
+</div>
+<div id="options" class="show">
+<p><a href="javascript:;" class="options">options</a></p>
+<p>
+<h4>Scramble</h4>
+<select id="scramblers"></select>
+<button id="btn-reset">reset</button>
+</p>
+<p>
+<h4>Timer</h4>
+<input type="checkbox" />Stop the timer on any key
+</p>
+<h4>CSS</h4>
+<textarea id="css-input" cols="80" rows="25"></textarea>
+</div>
+</div>
+<div id="right">
 <div id="session"></div>
-<div id="stats"><span>session average: <span id="avg">DNF</span></span></div>
+</div>
+</div>
 </body>
 </html>
