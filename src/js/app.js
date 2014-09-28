@@ -1,6 +1,6 @@
 var Event = require('jjtimer-core/src/Event');
 var Session = require('jjtimer-core/src/Session')();
-var Scrambler = require('jjtimer-core/src/Scrambler');
+var Scrambler = require('jjtimer-core/src/Scrambler')();
 
 var Util = {
   setInterval: setInterval.bind(window),
@@ -52,7 +52,7 @@ Scrambler.register({
   get : generic([["U", "D"], ["R", "L"], ["F", "B"]], ["", "2", "'"], 25)
 });
 
-var currentScrambler = Scrambler.list[0];
+var currentScrambler = Scrambler.get(0);
 
 var allKeysStop = true;
 
@@ -64,6 +64,15 @@ function reset() {
 }
 
 var $ = document.getElementById.bind(document);
+
+function show(id) {
+  $(id).style.display = 'inline';
+}
+
+function hide(id) {
+  $(id).style.display = 'none';
+}
+
 function toggle(id) {
   $(id).style.display = ($(id).style.display == 'none' ? 'inline' : 'none');
 }
@@ -225,20 +234,37 @@ if (isTouch) {
 
 Event.on('session/updated', function() {
   SessionFormatter.format(Session);
-  $('right').scrollTop = $('right').scrollHeight;
-  $('avg').innerHTML = format_time(Session.average());
   $('session-count').innerHTML = Session.length();
-  $('current-avg-5').innerHTML = format_time(Session.current_average(5));
-  $('current-avg-12').innerHTML = format_time(Session.current_average(12));
-  $('best-avg-5').innerHTML = format_time(Session.best_average(5));
-  $('best-avg-12').innerHTML = format_time(Session.best_average(12));
+  if (Session.length() < 3) {
+    hide('session-avg-outer');
+    hide('current-avg-all-outer');
+    hide('best-avg-all-outer');
+    hide('current-avg-12-outer');
+    hide('best-avg-12-outer');
+  } else {
+    show('session-avg-outer');
+    $('session-avg').innerHTML = format_time(Session.average());
+  }
+  if (Session.length() >= 5) {
+    $('current-avg-5').innerHTML = format_time(Session.current_average(5));
+    $('best-avg-5').innerHTML = format_time(Session.best_average(5));
+    show('current-avg-all-outer');
+    show('best-avg-all-outer');
+  }
+  if (Session.length() >= 12) {
+    $('current-avg-12').innerHTML = format_time(Session.current_average(12));
+    $('best-avg-12').innerHTML = format_time(Session.best_average(12));
+    show('current-avg-12-outer');
+    show('best-avg-12-outer');
+  }
+  $('right').scrollTop = $('right').scrollHeight;
 });
 
 window.addEventListener('load', function() {
   $('scramble').innerHTML = currentScrambler.get();
   var scramblersList = $('scramblers').options;
-  for(var i = 0; i < Scrambler.list.length; ++i) {
-    var scrambler = Scrambler.list[i];
+  for(var i = 0; i < Scrambler.length(); ++i) {
+    var scrambler = Scrambler.get(i);
     scramblersList[scramblersList.length] = new Option(scrambler.name1);
   }
   $('scramblers').addEventListener('change', function() {
@@ -267,6 +293,7 @@ window.addEventListener('load', function() {
       toggle_('options');
     });
   });
+  Event.emit('session/updated');
 });
 
 window.addEventListener('blur', function() {
