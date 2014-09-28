@@ -258,3 +258,13 @@ window.addEventListener('load', function() {
     });
   });
 });
+
+window.addEventListener('blur', function() {
+  document.body.classList.add('disabled');
+  $('time').classList.add('disabled');
+});
+
+window.addEventListener('focus', function() {
+  document.body.classList.remove('disabled');
+  $('time').classList.remove('disabled');
+});
