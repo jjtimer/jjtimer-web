@@ -69,8 +69,8 @@ function toggle(id) {
 }
 
 function toggle_(el) {
-var c = document.getElementById(el).className;
-document.getElementById(el).className = (c == "show") ? "hide" : "show";
+  var c = document.getElementById(el).className;
+  document.getElementById(el).className = (c == "show") ? "hide" : "show";
 }
 
 function format_time(time) {
@@ -196,8 +196,18 @@ if (isTouch) {
     };
   })();
 
-  Keyboard.down(Keyboard.space, Timer.triggerDown);
-  Keyboard.up(Keyboard.space, Timer.triggerUp);
+  Keyboard.down(Keyboard.space, function() {
+    if ($('options').classList.contains('hide'))
+      return;
+    if ($('detail').classList.contains('show-detail')) {
+      $('detail').classList.toggle('show-detail');
+      $('detail').classList.toggle('hide-detail');
+    }
+    Timer.triggerDown();
+  });
+  Keyboard.up(Keyboard.space, function() {
+    Timer.triggerUp();
+  });
 
   Keyboard.up(Keyboard.esc, reset);
 
