@@ -1,7 +1,9 @@
 var format_time = require('./TimeFormatter');
 var $ = document.getElementById.bind(document);
 
-var SessionFormatter = (function (Session) {
+var Event = require('jjtimer-core/src/Event');
+
+var SessionFormatter = function(Session) {
   function detail_time(ev) {
     var id = parseInt(ev.target.id.substr(1), 10);
     var solve = Session.at(id);
@@ -10,52 +12,42 @@ var SessionFormatter = (function (Session) {
     $("detail").classList.toggle("show-detail");
     $("detail").classList.toggle("hide-detail");
   }
-  function format(session) {
-    var root = $('session'), child = null;
-    var fragment = document.createDocumentFragment();
-    var c = document.createElement('ul');
-    var addComma = false, comma = "";
-    for(var i = 0; i < session.length(); ++i) {
-      var sp = document.createElement('li');
-      sp.onclick = detail_time;
-      sp.appendChild(document.createTextNode(format_time(session.at(i).time)));
-      sp.id = "t" + i;
-      c.appendChild(sp);
+
+  var SolveBox = React.createClass({
+    displayName : 'SolveBox',
+    render : function() {
+      return React.DOM.li({onClick : detail_time, id : this.props.id},
+                          format_time(this.props.time));
     }
-    fragment.appendChild(c);
-    if(root.lastChild)
-      root.replaceChild(fragment, root.lastChild);
-    else
-      root.appendChild(fragment);
-  }
-  function highlight(index, length, bracket0, bracket1) {
-    var slice = Array.prototype.slice;
-    var first = $('session').querySelector('.first');
-    if (first) {
-      first.classList.remove('first');
-    }
-    slice.call(document.getElementsByClassName('highlight-solve'), 0).forEach(function(el) {
-      el.classList.remove('highlight-solve');
-    });
-    slice.call(document.getElementsByClassName('bracket'), 0).forEach(function(el) {
-      el.classList.remove('bracket');
-      el.innerHTML = el.innerHTML.substr(1, el.innerHTML.length - 2);
-    });
-    var solveStart = $('t' + index);
-    solveStart.classList.add('first');
-    for(var i = 0; i < length; ++i) {
-      solveStart = $('t' + (index + i));
-      if (i == bracket0 || i == bracket1) {
-        solveStart.classList.add('bracket');
-        solveStart.innerHTML = "(" + solveStart.innerHTML + ")";
-      }
-      solveStart.classList.add('highlight-solve');
-    }
-  }
+  });
+
+  var comp = React.createClass({
+    displayName : 'SessionBox',
+    getInitialState : function() { return {session : Session}; },
+    componentDidMount :
+        function() {
+          var callback =
+              (function(){this.setState({session : Session})}).bind(this);
+          Event.on('session/updated', callback);
+        },
+    render :
+        function() {
+          var solvelist = [];
+          for (var i = 0; i < this.state.session.length(); ++i) {
+            solvelist.push(SolveBox({
+              time : this.state.session.at(i).time,
+              id : 't' + i,
+              key : i
+            }));
+          }
+          return (React.DOM.ul({id : "taglist"}, solvelist));
+        }
+  });
   return {
-    format: format,
-    highlight: highlight
+    render : function() {
+      React.renderComponent(comp(null), document.getElementById('session'))
+    }
   };
-});
+};
 
 module.exports = SessionFormatter;

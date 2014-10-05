@@ -95,6 +95,9 @@ Event.on('timer/running', function() {
 Event.on('timer/stopped', function() {
   var col = window.getComputedStyle($('time')).getPropertyValue('color');
   $('time').innerHTML = format_time(Timer.getCurrent());
+var i = 1;
+if(window['poop']){ i = 1000; }
+for(var ii = 0; ii < i; ++ii)
   Session.add({
     time: Timer.getCurrent(),
     scramble: $('scramble').innerHTML,
@@ -172,7 +175,6 @@ document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
-  SessionFormatter.format(Session);
   $('session-count').innerHTML = Session.length();
   if (Session.length() < 3) {
     hide('session-avg-outer');
@@ -253,6 +255,11 @@ window.addEventListener('load', function() {
                                Session.best_average(12).max);
   });
   Event.emit('session/updated');
+SessionFormatter.render();
+  /*React.renderComponent(
+    SessionFormatter(null),
+    document.getElementById('session')
+  );*/
 });
 
 window.addEventListener('blur', function() {

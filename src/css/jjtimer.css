@@ -1,3 +1,22 @@
+/*#taglist {
+  display: inline;
+  list-style: none;
+  color: #36c;
+}
+
+#taglist li {
+  display: inline;
+}
+
+#taglist li:after {
+  content: ", ";
+}
+
+#taglist li:last-child:after {
+    content: "";
+}*/
+
+
 * {
   margin: 0;
   padding: 0;
@@ -146,10 +165,11 @@ div:focus {
   display: none;
 }
 
+/*
 .running #right {
   opacity: 0;
   transition: all 1s;
-}
+}*/
 
 .running #scramble {
   opacity: 0;
