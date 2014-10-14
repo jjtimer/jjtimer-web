@@ -199,58 +199,59 @@ if (isTouch) {
     if (ev.target != $('scramblers'))
       Timer.triggerUp();
   };
-} else {
-  var Keyboard = (function() {
-    function up(key, fn) { Event.on('keyboard/up/' + key, fn); }
-    function down(key, fn) { Event.on('keyboard/down/' + key, fn); }
-    function up_handler(ev) {
-      if(ev.keyCode == 32 || ev.keyCode == 9)
-        ev.preventDefault();
-      Event.emit('keyboard/up/' + ev.keyCode);
-    }
-    function down_handler(ev) {
-      if(ev.keyCode == 32 || ev.keyCode == 9)
-        ev.preventDefault();
-      Event.emit('keyboard/down/' + ev.keyCode);
-      if (allKeysStop && Timer.isRunning() && ev.keyCode != 32)
-        Event.emit('keyboard/down/32');
-    }
-    return {
-      up: up,
-      down: down,
-      up_handler: up_handler,
-      down_handler: down_handler,
-      space: 32,
-      esc: 27
-    };
-  })();
-
-  Keyboard.down(Keyboard.space, function() {
-    if ($('options').classList.contains('hide'))
-      return;
-    if ($('detail').classList.contains('show-detail')) {
-      $('detail').classList.toggle('show-detail');
-      $('detail').classList.toggle('hide-detail');
-    }
-    Timer.triggerDown();
-  });
-  Keyboard.up(Keyboard.space, function() {
-    Timer.triggerUp();
-  });
-
-  Keyboard.up(Keyboard.esc, reset);
-
-  Keyboard.up(68, function() {
-    Session.remove();
-    Event.emit('session/updated');
-  });
-
-  Keyboard.up(13, function() {
-    $('user-style').innerHTML = $('css-input').value;
-  });
-  document.addEventListener('keydown', Keyboard.down_handler);
-  document.addEventListener('keyup', Keyboard.up_handler);
 }
+
+var Keyboard = (function() {
+  function up(key, fn) { Event.on('keyboard/up/' + key, fn); }
+  function down(key, fn) { Event.on('keyboard/down/' + key, fn); }
+  function up_handler(ev) {
+    if(ev.keyCode == 32 || ev.keyCode == 9)
+      ev.preventDefault();
+    Event.emit('keyboard/up/' + ev.keyCode);
+  }
+  function down_handler(ev) {
+    if(ev.keyCode == 32 || ev.keyCode == 9)
+      ev.preventDefault();
+    Event.emit('keyboard/down/' + ev.keyCode);
+    if (allKeysStop && Timer.isRunning() && ev.keyCode != 32)
+      Event.emit('keyboard/down/32');
+  }
+  return {
+    up: up,
+    down: down,
+    up_handler: up_handler,
+    down_handler: down_handler,
+    space: 32,
+    esc: 27
+  };
+})();
+
+Keyboard.down(Keyboard.space, function() {
+  if ($('options').classList.contains('hide'))
+    return;
+  if ($('detail').classList.contains('show-detail')) {
+    $('detail').classList.toggle('show-detail');
+    $('detail').classList.toggle('hide-detail');
+  }
+  Timer.triggerDown();
+});
+Keyboard.up(Keyboard.space, function() {
+  Timer.triggerUp();
+});
+
+Keyboard.up(Keyboard.esc, reset);
+
+Keyboard.up(68, function() {
+  Session.remove();
+  Event.emit('session/updated');
+});
+
+Keyboard.up(13, function() {
+  $('user-style').innerHTML = $('css-input').value;
+});
+
+document.addEventListener('keydown', Keyboard.down_handler);
+document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
   SessionFormatter.format(Session);
