@@ -108,6 +108,36 @@ a { color: #36c; }
   font-size: 1.2em;
 }
 
+#session ul {
+  display: inline;
+  list-style: none;
+}
+
+#session ul li {
+  display: inline;
+  color: #36c;
+}
+
+#session ul li:before {
+  content: ", ";
+}
+
+#session ul li:first-child:before {
+    content: "";
+}
+
+.first:before {
+    background-color: #eee;
+}
+
+.highlight-solve {
+  background-color: yellow;
+}
+
+div:focus {
+  outline-width: 0;
+}
+
 .running {
   color: gray !important;
 }

@@ -121,21 +121,14 @@ var SessionFormatter = (function () {
   function format(session) {
     var root = $('session'), child = null;
     var fragment = document.createDocumentFragment();
-    var c = document.createElement('div');
+    var c = document.createElement('ul');
     var addComma = false, comma = "";
     for(var i = 0; i < session.length(); ++i) {
-      var sp = document.createElement('a');
+      var sp = document.createElement('li');
       sp.onclick = detail_time;
-      sp.href="javascript:;";
       sp.appendChild(document.createTextNode(format_time(session.at(i).time)));
       sp.id = "t" + i;
-      sp.style.color = session.at(i).color;
-      c.appendChild(document.createTextNode(comma));
       c.appendChild(sp);
-      if (!addComma) {
-        comma = ", ";
-        addComma = true;
-      }
     }
     fragment.appendChild(c);
     if(root.lastChild)
@@ -143,7 +136,34 @@ var SessionFormatter = (function () {
     else
       root.appendChild(fragment);
   }
-  return { format: format };
+  function highlight(index, length, bracket0, bracket1) {
+    var slice = Array.prototype.slice;
+    var first = $('session').querySelector('.first');
+    if (first) {
+      first.classList.remove('first');
+    }
+    slice.call(document.getElementsByClassName('highlight-solve'), 0).forEach(function(el) {
+      el.classList.remove('highlight-solve');
+    });
+    slice.call(document.getElementsByClassName('bracket'), 0).forEach(function(el) {
+      el.classList.remove('bracket');
+      el.innerHTML = el.innerHTML.substr(1, el.innerHTML.length - 2);
+    });
+    var solveStart = $('t' + index);
+    solveStart.classList.add('first');
+    for(var i = 0; i < length; ++i) {
+      solveStart = $('t' + (index + i));
+      if (i == bracket0 || i == bracket1) {
+        solveStart.classList.add('bracket');
+        solveStart.innerHTML = "(" + solveStart.innerHTML + ")";
+      }
+      solveStart.classList.add('highlight-solve');
+    }
+  }
+  return {
+    format: format,
+    highlight: highlight
+  };
 })();
 
 Event.on('timer/started', function() {
@@ -243,17 +263,17 @@ Event.on('session/updated', function() {
     hide('best-avg-12-outer');
   } else {
     show('session-avg-outer');
-    $('session-avg').innerHTML = format_time(Session.average());
+    $('session-avg').innerHTML = format_time(Session.average().avg);
   }
   if (Session.length() >= 5) {
-    $('current-avg-5').innerHTML = format_time(Session.current_average(5));
-    $('best-avg-5').innerHTML = format_time(Session.best_average(5));
+    $('current-avg-5').innerHTML = format_time(Session.current_average(5).avg);
+    $('best-avg-5').innerHTML = format_time(Session.best_average(5).avg);
     show('current-avg-all-outer');
     show('best-avg-all-outer');
   }
   if (Session.length() >= 12) {
-    $('current-avg-12').innerHTML = format_time(Session.current_average(12));
-    $('best-avg-12').innerHTML = format_time(Session.best_average(12));
+    $('current-avg-12').innerHTML = format_time(Session.current_average(12).avg);
+    $('best-avg-12').innerHTML = format_time(Session.best_average(12).avg);
     show('current-avg-12-outer');
     show('best-avg-12-outer');
   }
@@ -268,7 +288,7 @@ window.addEventListener('load', function() {
     scramblersList[scramblersList.length] = new Option(scrambler.name1);
   }
   $('scramblers').addEventListener('change', function() {
-    currentScrambler = Scrambler.list[this.selectedIndex];
+    currentScrambler = Scrambler.get(this.selectedIndex);
     $('scramble').innerHTML = currentScrambler.get();
     toggle_('top');
     toggle_('options');
@@ -292,6 +312,26 @@ window.addEventListener('load', function() {
       toggle_('top');
       toggle_('options');
     });
+  });
+  $('current-avg-5').addEventListener('click', function() {
+    SessionFormatter.highlight(Session.length() - 5, 5,
+                               Session.current_average(5).min,
+                               Session.current_average(5).max);
+  });
+  $('best-avg-5').addEventListener('click', function() {
+    SessionFormatter.highlight(Session.best_average(5).index, 5,
+                               Session.best_average(5).min,
+                               Session.best_average(5).max);
+  });
+  $('current-avg-12').addEventListener('click', function() {
+    SessionFormatter.highlight(Session.length() - 12, 12,
+                               Session.current_average(12).min,
+                               Session.current_average(12).max);
+  });
+  $('best-avg-12').addEventListener('click', function() {
+    SessionFormatter.highlight(Session.best_average(12).index, 12,
+                               Session.best_average(12).min,
+                               Session.best_average(12).max);
   });
   Event.emit('session/updated');
 });
