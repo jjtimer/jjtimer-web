@@ -2,7 +2,7 @@ var Event = require('jjtimer-core/src/Event');
 var Session = require('jjtimer-core/src/Session')();
 var Scrambler = require('jjtimer-core/src/Scrambler')();
 var format_time = require('./TimeFormatter');
-var SessionFormatter = require('./SessionList')(Session);
+var SessionList = require('./SessionList')(Session);
 
 var Util = {
   setInterval: setInterval.bind(window),
@@ -172,7 +172,7 @@ document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
-  SessionFormatter.format(Session);
+  SessionList.format(Session);
   $('session-count').innerHTML = Session.length();
   if (Session.length() < 3) {
     hide('session-avg-outer');
@@ -233,22 +233,22 @@ window.addEventListener('load', function() {
     });
   });
   $('current-avg-5').addEventListener('click', function() {
-    SessionFormatter.highlight(Session.length() - 5, 5,
+    SessionList.highlight(Session.length() - 5, 5,
                                Session.current_average(5).min,
                                Session.current_average(5).max);
   });
   $('best-avg-5').addEventListener('click', function() {
-    SessionFormatter.highlight(Session.best_average(5).index, 5,
+    SessionList.highlight(Session.best_average(5).index, 5,
                                Session.best_average(5).min,
                                Session.best_average(5).max);
   });
   $('current-avg-12').addEventListener('click', function() {
-    SessionFormatter.highlight(Session.length() - 12, 12,
+    SessionList.highlight(Session.length() - 12, 12,
                                Session.current_average(12).min,
                                Session.current_average(12).max);
   });
   $('best-avg-12').addEventListener('click', function() {
-    SessionFormatter.highlight(Session.best_average(12).index, 12,
+    SessionList.highlight(Session.best_average(12).index, 12,
                                Session.best_average(12).min,
                                Session.best_average(12).max);
   });
