@@ -61,7 +61,7 @@ var allKeysStop = true;
 function reset() {
   Timer.reset();
   Session.reset();
-  $('time').innerHTML = 'ready';
+  $('time').textContent = 'ready';
   Event.emit('session/updated');
 }
 
@@ -89,12 +89,12 @@ Event.on('timer/started', function() {
 });
 
 Event.on('timer/running', function() {
-  $('time').innerHTML = format_time(Timer.getCurrent());
+  $('time').textContent = format_time(Timer.getCurrent());
 });
 
 Event.on('timer/stopped', function() {
   var col = window.getComputedStyle($('time')).getPropertyValue('color');
-  $('time').innerHTML = format_time(Timer.getCurrent());
+  $('time').textContent = format_time(Timer.getCurrent());
   Session.add({
     time: Timer.getCurrent(),
     scramble: $('scramble').innerHTML,
