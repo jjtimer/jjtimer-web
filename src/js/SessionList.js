@@ -5,7 +5,7 @@ var SessionFormatter = (function (Session) {
   function detail_time(ev) {
     var id = parseInt(ev.target.id.substr(1), 10);
     var solve = Session.at(id);
-    $('detail').innerHTML =
+    $('detail').textContent =
         (id + 1) + ". " + format_time(solve.time) + " " + solve.scramble;
     $("detail").classList.toggle("show-detail");
     $("detail").classList.toggle("hide-detail");
@@ -39,7 +39,7 @@ var SessionFormatter = (function (Session) {
     });
     slice.call(document.getElementsByClassName('bracket'), 0).forEach(function(el) {
       el.classList.remove('bracket');
-      el.innerHTML = el.innerHTML.substr(1, el.innerHTML.length - 2);
+      el.textContent = el.textContent.substr(1, el.textContent.length - 2);
     });
     var solveStart = $('t' + index);
     solveStart.classList.add('first');
@@ -47,7 +47,7 @@ var SessionFormatter = (function (Session) {
       solveStart = $('t' + (index + i));
       if (i == bracket0 || i == bracket1) {
         solveStart.classList.add('bracket');
-        solveStart.innerHTML = "(" + solveStart.innerHTML + ")";
+        solveStart.textContent = "(" + solveStart.textContent + ")";
       }
       solveStart.classList.add('highlight-solve');
     }

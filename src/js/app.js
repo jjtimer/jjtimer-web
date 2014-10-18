@@ -97,11 +97,11 @@ Event.on('timer/stopped', function() {
   $('time').textContent = format_time(Timer.getCurrent());
   Session.add({
     time: Timer.getCurrent(),
-    scramble: $('scramble').innerHTML,
+    scramble: $('scramble').textContent,
     splits: Timer.getSplits(),
     color: col
   });
-  $('scramble').innerHTML = currentScrambler.get();
+  $('scramble').textContent = currentScrambler.get();
   Event.emit('session/updated');
   document.body.classList.remove('running');
 });
@@ -165,7 +165,7 @@ Keyboard.up(68, function() {
 });
 
 Keyboard.up(13, function() {
-  $('user-style').innerHTML = $('css-input').value;
+  $('user-style').textContent = $('css-input').value;
 });
 
 document.addEventListener('keydown', Keyboard.down_handler);
@@ -173,7 +173,7 @@ document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
   SessionList.format(Session);
-  $('session-count').innerHTML = Session.length();
+  $('session-count').textContent = Session.length();
   if (Session.length() < 3) {
     hide('session-avg-outer');
     hide('current-avg-all-outer');
@@ -182,17 +182,17 @@ Event.on('session/updated', function() {
     hide('best-avg-12-outer');
   } else {
     show('session-avg-outer');
-    $('session-avg').innerHTML = format_time(Session.average().avg);
+    $('session-avg').textContent = format_time(Session.average().avg);
   }
   if (Session.length() >= 5) {
-    $('current-avg-5').innerHTML = format_time(Session.current_average(5).avg);
-    $('best-avg-5').innerHTML = format_time(Session.best_average(5).avg);
+    $('current-avg-5').textContent = format_time(Session.current_average(5).avg);
+    $('best-avg-5').textContent = format_time(Session.best_average(5).avg);
     show('current-avg-all-outer');
     show('best-avg-all-outer');
   }
   if (Session.length() >= 12) {
-    $('current-avg-12').innerHTML = format_time(Session.current_average(12).avg);
-    $('best-avg-12').innerHTML = format_time(Session.best_average(12).avg);
+    $('current-avg-12').textContent = format_time(Session.current_average(12).avg);
+    $('best-avg-12').textContent = format_time(Session.best_average(12).avg);
     show('current-avg-12-outer');
     show('best-avg-12-outer');
   }
@@ -200,7 +200,7 @@ Event.on('session/updated', function() {
 });
 
 window.addEventListener('load', function() {
-  $('scramble').innerHTML = currentScrambler.get();
+  $('scramble').textContent = currentScrambler.get();
   var scramblersList = $('scramblers').options;
   for(var i = 0; i < Scrambler.length(); ++i) {
     var scrambler = Scrambler.get(i);
@@ -208,7 +208,7 @@ window.addEventListener('load', function() {
   }
   $('scramblers').addEventListener('change', function() {
     currentScrambler = Scrambler.get(this.selectedIndex);
-    $('scramble').innerHTML = currentScrambler.get();
+    $('scramble').textContent = currentScrambler.get();
     toggle_('top');
     toggle_('options');
   });
@@ -222,7 +222,7 @@ window.addEventListener('load', function() {
   });
   $('css-input').addEventListener('keyup', function(e) {
     e.stopPropagation();
-    $('user-style').innerHTML = $('css-input').value;
+    $('user-style').textContent = $('css-input').value;
     return false;
   });
   Array.prototype.forEach.call(document.getElementsByClassName('options'),
