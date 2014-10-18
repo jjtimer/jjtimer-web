@@ -4,9 +4,30 @@ var Scrambler = require('jjtimer-core/src/Scrambler')();
 var format_time = require('./TimeFormatter');
 var SessionList = require('./SessionList')(Session);
 
+var requestAnimationFrame = require('./requestAnimationFrame');
+var cancelAnimationFrame = require('./cancelAnimationFrame');
+
+function setInterval(fn, delay) {
+  // Have to use an object here to store a reference
+  // to the requestAnimationFrame ID.
+  var handle = {};
+
+  function interval() {
+    fn.call();
+    handle.value = requestAnimationFrame(interval)
+  }
+
+  handle.value = requestAnimationFrame(interval);
+  return handle;
+}
+
+function clearInterval(interval) {
+  cancelAnimationFrame(interval.value);
+}
+
 var Util = {
-  setInterval: setInterval.bind(window),
-  clearInterval: clearInterval.bind(window),
+  setInterval: setInterval,
+  clearInterval: clearInterval,
   getMilli: window.performance && window.performance.now
                  ? window.performance.now.bind(window.performance)
                  : Date.now.bind(Date)
