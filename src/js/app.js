@@ -109,7 +109,7 @@ Event.on('timer/stopped', function() {
 var isTouch = (window.ontouchstart !== undefined);
 if (isTouch) {
   document.ontouchstart = function(ev) {
-    if (ev.target != $('scramblers') && ev.target.parentNode != $('session'))
+    if (ev.target != $('scramblers') && ev.target.parentNode != $('session') && !ev.target.classList.contains('options'))
       Timer.triggerDown();
   };
 
