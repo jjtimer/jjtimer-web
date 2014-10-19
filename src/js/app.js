@@ -171,7 +171,11 @@ Keyboard.up(Keyboard.space, function() {
   Timer.triggerUp();
 });
 
-Keyboard.up(Keyboard.esc, reset);
+Keyboard.up(Keyboard.esc, function() {
+  if (Session.length() > 0 && confirm("Do you want to reset the session?")) {
+    reset();
+  }
+});
 
 Keyboard.up(68, function() {
   Session.remove();
