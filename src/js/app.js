@@ -35,6 +35,7 @@ var Util = {
 };
 
 var Timer = require('jjtimer-core/src/Timer')(Event, Util);
+var Keyboard = require('./Keyboard')(Timer);
 
 function generic(turns, suffixes, length) {
   function randn(n) {  return Math.floor(Math.random() * n); }
@@ -67,18 +68,16 @@ function generic(turns, suffixes, length) {
 }
 
 Scrambler.register({
-  name1 : "4x4",
-  get : generic([["U", "D", "u"], ["R", "L", "r"], ["F", "B", "f"]],
+  name1: "4x4",
+  get: generic([["U", "D", "u"], ["R", "L", "r"], ["F", "B", "f"]],
                 ["", "2", "'"], 40)
 });
 Scrambler.register({
-  name1 : "3x3",
-  get : generic([["U", "D"], ["R", "L"], ["F", "B"]], ["", "2", "'"], 25)
+  name1: "3x3",
+  get: generic([["U", "D"], ["R", "L"], ["F", "B"]], ["", "2", "'"], 25)
 });
 
 var currentScrambler = Scrambler.get(0);
-
-var allKeysStop = true;
 
 function reset() {
   Timer.reset();
@@ -132,31 +131,6 @@ if (isTouch) {
       Timer.triggerUp();
   };
 }
-
-var Keyboard = (function() {
-  function up(key, fn) { Event.on('keyboard/up/' + key, fn); }
-  function down(key, fn) { Event.on('keyboard/down/' + key, fn); }
-  function up_handler(ev) {
-    if(ev.keyCode == 32 || ev.keyCode == 9)
-      ev.preventDefault();
-    Event.emit('keyboard/up/' + ev.keyCode);
-  }
-  function down_handler(ev) {
-    if(ev.keyCode == 32 || ev.keyCode == 9)
-      ev.preventDefault();
-    Event.emit('keyboard/down/' + ev.keyCode);
-    if (allKeysStop && Timer.isRunning() && ev.keyCode != 32)
-      Event.emit('keyboard/down/32');
-  }
-  return {
-    up: up,
-    down: down,
-    up_handler: up_handler,
-    down_handler: down_handler,
-    space: 32,
-    esc: 27
-  };
-})();
 
 Keyboard.down(Keyboard.space, function() {
   if ($('options').classList.contains('hide'))
