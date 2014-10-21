@@ -92,9 +92,9 @@ function toggle(id) {
   $(id).style.display = ($(id).style.display == 'none' ? 'inline' : 'none');
 }
 
-function toggle_(el) {
-  var c = document.getElementById(el).className;
-  document.getElementById(el).className = (c == "show") ? "hide" : "show";
+function toggleOptions() {
+  $('top').classList.toggle('toggle-options');
+  $('options').classList.toggle('toggle-options');
 }
 
 Event.on('timer/started', function() {
@@ -133,7 +133,7 @@ if (isTouch) {
 }
 
 Keyboard.down(Keyboard.space, function() {
-  if ($('options').classList.contains('hide'))
+  if ($('options').classList.contains('toggle-options'))
     return;
   if ($('detail').classList.contains('show-detail')) {
     $('detail').classList.toggle('show-detail');
@@ -179,8 +179,7 @@ window.addEventListener('load', function() {
   $('scramblers').addEventListener('change', function() {
     currentScrambler = Scrambler.get(this.selectedIndex);
     $('scramble').textContent = currentScrambler.get();
-    toggle_('top');
-    toggle_('options');
+    toggleOptions();
   });
   $('btn-reset').addEventListener('click', reset);
   if (!isTouch) {
@@ -197,10 +196,7 @@ window.addEventListener('load', function() {
   });
   Array.prototype.forEach.call(document.getElementsByClassName('options'),
                                function(el) {
-    el.addEventListener('click', function() {
-      toggle_('top');
-      toggle_('options');
-    });
+    el.addEventListener('click', toggleOptions);
   });
   $('current-avg-5').addEventListener('click', function() {
     SessionList.highlight(Session.length() - 5, 5,

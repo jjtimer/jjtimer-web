@@ -33,6 +33,7 @@ a { color: #36c; }
   width: 100%;
   padding: 0.5%;
   box-sizing: border-box;
+  transition: transform 0.5s;
 }
 
 #options {
@@ -40,6 +41,7 @@ a { color: #36c; }
   padding: 1%;
   text-align: left;
   box-sizing: border-box;
+  transition: transform 0.5s;
 }
 
 #time {
@@ -81,12 +83,7 @@ a { color: #36c; }
   transition: all 0.5s;
 }
 
-.show {
-  transition: transform 0.5s;
-}
-
-.hide {
-  transition: transform 0.5s;
+.toggle-options {
   transform: translateY(-100%);
 }
 
