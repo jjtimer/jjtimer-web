@@ -119,19 +119,6 @@ Event.on('timer/stopped', function() {
   document.body.classList.remove('running');
 });
 
-var isTouch = (window.ontouchstart !== undefined);
-if (isTouch) {
-  document.ontouchstart = function(ev) {
-    if (ev.target != $('scramblers') && ev.target.parentNode != $('session') && !ev.target.classList.contains('options'))
-      Timer.triggerDown();
-  };
-
-  document.ontouchend = function(ev) {
-    if (ev.target != $('scramblers'))
-      Timer.triggerUp();
-  };
-}
-
 Keyboard.down(Keyboard.space, function() {
   if ($('options').classList.contains('toggle-options'))
     return;
@@ -182,7 +169,11 @@ window.addEventListener('load', function() {
     toggleOptions();
   });
   $('btn-reset').addEventListener('click', reset);
-  if (!isTouch) {
+  var isTouch = (window.ontouchstart !== undefined);
+  if (isTouch) {
+    $('top').addEventListener('touchstart', Timer.triggerDown);
+    $('top').addEventListener('touchend', Timer.triggerUp);
+  } else {
     toggle('btn-reset');
   }
   $('css-input').addEventListener('keydown', function(e) {
