@@ -152,7 +152,7 @@ document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
-  SessionList.format(Session);
+  SessionList.render();
   Stats.render();
   $('right').scrollTop = $('right').scrollHeight;
 });

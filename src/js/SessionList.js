@@ -10,15 +10,15 @@ var SessionFormatter = (function (Session) {
     $("detail").classList.toggle("show-detail");
     $("detail").classList.toggle("hide-detail");
   }
-  function format(session) {
+  function render() {
     var root = $('session'), child = null;
     var fragment = document.createDocumentFragment();
     var c = document.createElement('ul');
     var addComma = false, comma = "";
-    for(var i = 0; i < session.length(); ++i) {
+    for(var i = 0; i < Session.length(); ++i) {
       var sp = document.createElement('li');
       sp.onclick = detail_time;
-      sp.appendChild(document.createTextNode(format_time(session.at(i).time)));
+      sp.appendChild(document.createTextNode(format_time(Session.at(i).time)));
       sp.id = "t" + i;
       c.appendChild(sp);
     }
@@ -53,7 +53,7 @@ var SessionFormatter = (function (Session) {
     }
   }
   return {
-    format: format,
+    render: render,
     highlight: highlight
   };
 });
