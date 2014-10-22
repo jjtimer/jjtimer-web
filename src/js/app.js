@@ -159,7 +159,10 @@ Event.on('session/updated', function() {
 
 window.addEventListener('load', function() {
   if (Storage.isAvailable) {
-    Session.replaceSolves(Storage.get('session.solves'));
+    var savedSolves = Storage.get('session.solves');
+    if (savedSolves) {
+      Session.replaceSolves(savedSolves);
+    }
   }
   $('scramble').textContent = currentScrambler.get();
   var scramblersList = $('scramblers').options;
@@ -218,7 +221,11 @@ window.addEventListener('load', function() {
 
 window.addEventListener("beforeunload", function (e) {
   if (Storage.isAvailable) {
-    Storage.put('session.solves', Session.getSolves());
+    if(Session.length() > 0) {
+      Storage.put('session.solves', Session.getSolves());
+    } else {
+      Storage.remove('session.solves');
+    }
   }
 });
 
