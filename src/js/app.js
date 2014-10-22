@@ -1,4 +1,5 @@
 var Event = require('jjtimer-core/src/Event');
+var Storage = require('./Storage')();
 var Session = require('jjtimer-core/src/Session')();
 var Scrambler = require('jjtimer-core/src/Scrambler')();
 var format_time = require('./TimeFormatter');
@@ -157,6 +158,9 @@ Event.on('session/updated', function() {
 });
 
 window.addEventListener('load', function() {
+  if (Storage.isAvailable) {
+    Session.replaceSolves(Storage.get('session.solves'));
+  }
   $('scramble').textContent = currentScrambler.get();
   var scramblersList = $('scramblers').options;
   for(var i = 0; i < Scrambler.length(); ++i) {
@@ -210,6 +214,12 @@ window.addEventListener('load', function() {
                                Session.best_average(12).max);
   });
   Event.emit('session/updated');
+});
+
+window.addEventListener("beforeunload", function (e) {
+  if (Storage.isAvailable) {
+    Storage.put('session.solves', Session.getSolves());
+  }
 });
 
 window.addEventListener('blur', function() {
