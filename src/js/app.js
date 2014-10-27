@@ -145,10 +145,6 @@ Keyboard.up(68, function() {
   Event.emit('session/updated');
 });
 
-Keyboard.up(13, function() {
-  $('user-style').textContent = $('css-input').value;
-});
-
 document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
