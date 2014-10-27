@@ -1,10 +1,12 @@
 var format_time = require('./TimeFormatter');
 var $ = document.getElementById.bind(document);
 function show(id) {
-  $(id).style.display = 'inline';
+  var el = $(id) || id;
+  el.style.display = 'inline';
 }
 function hide(id) {
-  $(id).style.display = 'none';
+  var el = $(id) || id;
+  el.style.display = 'none';
 }
 
 var Stats = (function(Session) {
@@ -35,8 +37,15 @@ var Stats = (function(Session) {
       hide('best-avg-12-outer');
     }
   }
+  function setCompact(isCompact) {
+    var brs = $('stats').getElementsByTagName('br');
+    var slice = Array.prototype.slice;
+    var fn = isCompact ? hide : show;
+    slice.call(brs, 0).forEach(fn);
+  }
   return {
-    render: render
+    render: render,
+    setCompact: setCompact
   };
 });
 

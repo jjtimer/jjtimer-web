@@ -194,6 +194,12 @@ window.addEventListener('load', function() {
     $('user-style').textContent = $('css-input').value;
     return false;
   });
+  $('ui-stats-type').addEventListener('change', function(e) {
+    Stats.setCompact(this.checked);
+    config['ui-stats-compact'] = this.checked;
+  });
+  $('ui-stats-type').checked = config['ui-stats-compact'];
+  Stats.setCompact(config['ui-stats-compact']);
   Array.prototype.forEach.call(document.getElementsByClassName('options'),
                                function(el) {
     el.addEventListener('click', toggleOptions);

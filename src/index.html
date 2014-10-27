@@ -14,11 +14,11 @@
 <div id="top">
 <div id="time">ready</div>
 <div id="scramble"></div>
-<div id="stats">
-  <span>times: <span id="session-count">0</span></span>
-  <span id="session-avg-outer">session average: <span id="session-avg">DNF</span></span>
-  <span id="current-avg-all-outer">current average: <span id="current-avg-5">DNF</span><span id="current-avg-12-outer">, <span id="current-avg-12">DNF</span></span></span>
-  <span id="best-avg-all-outer">best average: <span id="best-avg-5">DNF</span><span id="best-avg-12-outer">, <span id="best-avg-12">DNF</span></span></span>
+<div id="stats" style="text-align: justify;">
+  <span>times: <span id="session-count">0</span><br /></span>
+  <span id="session-avg-outer">session average: <span id="session-avg">DNF</span><br /></span>
+  <span id="current-avg-all-outer">current average: <a id="current-avg-5">DNF</a><span id="current-avg-12-outer">, <a id="current-avg-12">DNF</a></span><br /></span>
+  <span id="best-avg-all-outer">best average: <a id="best-avg-5">DNF</a><span id="best-avg-12-outer">, <a id="best-avg-12">DNF</a></span><br /></span>
 <a class="options">options</a>
 </div>
 </div>
@@ -33,8 +33,14 @@
 <h4>Timer</h4>
 <input type="checkbox" />Stop the timer on any key
 </p>
+<p>
+<h4>UI</h4>
+<input type="checkbox" id="ui-stats-type"><label for="ui-stats-type">Compact stats view</label>
+</p>
+<p>
 <h4>CSS</h4>
 <textarea id="css-input" cols="80" rows="25"></textarea>
+</p>
 </div>
 </div>
 <div id="right">
