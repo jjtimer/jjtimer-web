@@ -78,7 +78,8 @@ Scrambler.register({
   get: generic([["U", "D"], ["R", "L"], ["F", "B"]], ["", "2", "'"], 25)
 });
 
-var currentScrambler = Scrambler.get(0);
+var config = {};
+var currentScrambler;
 
 function reset() {
   Timer.reset();
@@ -163,17 +164,22 @@ window.addEventListener('load', function() {
     if (savedSolves) {
       Session.replaceSolves(savedSolves);
     }
+    config = Storage.get('config') || {};
   }
+  config['scramblerIndex'] = config['scramblerIndex'] || 0;
+  currentScrambler = Scrambler.get(config['scramblerIndex']);
   $('scramble').textContent = currentScrambler.get();
   var scramblersList = $('scramblers').options;
   for(var i = 0; i < Scrambler.length(); ++i) {
     var scrambler = Scrambler.get(i);
     scramblersList[scramblersList.length] = new Option(scrambler.name1);
   }
+  $('scramblers').selectedIndex = config['scramblerIndex'];
   $('scramblers').addEventListener('change', function() {
     currentScrambler = Scrambler.get(this.selectedIndex);
     $('scramble').textContent = currentScrambler.get();
     toggleOptions();
+    config['scramblerIndex'] = this.selectedIndex;
   });
   $('btn-reset').addEventListener('click', reset);
   var isTouch = (window.ontouchstart !== undefined);
@@ -226,6 +232,7 @@ window.addEventListener("beforeunload", function (e) {
     } else {
       Storage.remove('session.solves');
     }
+    Storage.put('config', config);
   }
 });
 
