@@ -11,26 +11,26 @@ var SessionFormatter = (function (Session) {
     $("detail").classList.toggle("hide-detail");
   }
   function render(index, length, bracket0, bracket1) {
-    var root = $('session'), child = null;
+    var root = $('session');
     root.addEventListener('click', detail_time);
     var fragment = document.createDocumentFragment();
-    var c = document.createElement('ul');
+    var ul = document.createElement('ul');
     for(var i = 0; i < Session.length(); ++i) {
-      var sp = document.createElement('li');
-      sp.textContent = format_time(Session.at(i).time);
+      var li = document.createElement('li');
+      li.textContent = format_time(Session.at(i).time);
       if (i >= (index) && i <= (index + length)) {
-        sp.classList.add('highlight-solve');
+        li.classList.add('highlight-solve');
       }
       if (i == index) {
-        sp.classList.add('first');
+        li.classList.add('first');
       }
       if (i == (index + bracket0) || i == (index + bracket1)) {
-        sp.textContent = "(" + sp.textContent + ")";
+        li.textContent = "(" + li.textContent + ")";
       }
-      sp.id = "t" + i;
-      c.appendChild(sp);
+      li.id = "t" + i;
+      ul.appendChild(li);
     }
-    fragment.appendChild(c);
+    fragment.appendChild(ul);
     if(root.lastChild)
       root.replaceChild(fragment, root.lastChild);
     else
