@@ -36,12 +36,8 @@ var SessionFormatter = (function (Session) {
     else
       root.appendChild(fragment);
   }
-  function highlight(index, length, bracket0, bracket1) {
-    render(index, length, bracket0, bracket1);
-  }
   return {
-    render: render,
-    highlight: highlight
+    render: render
   };
 });
 

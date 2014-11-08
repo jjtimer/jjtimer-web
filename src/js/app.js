@@ -209,25 +209,25 @@ window.addEventListener('load', function() {
 });
 
 Event.on('current-avg-5/highlight', function() {
-  SessionList.highlight(Session.length() - 5, 5,
+  SessionList.render(Session.length() - 5, 5,
                         Session.current_average(5).min,
                         Session.current_average(5).max);
 });
 
 Event.on('best-avg-5/highlight', function() {
-  SessionList.highlight(Session.best_average(5).index, 5,
+  SessionList.render(Session.best_average(5).index, 5,
                         Session.best_average(5).min,
                         Session.best_average(5).max);
 });
 
 Event.on('current-avg-12/highlight', function() {
-  SessionList.highlight(Session.length() - 12, 12,
+  SessionList.render(Session.length() - 12, 12,
                         Session.current_average(12).min,
                         Session.current_average(12).max);
 });
 
 Event.on('best-avg-12/highlight', function() {
-  SessionList.highlight(Session.best_average(12).index, 12,
+  SessionList.render(Session.best_average(12).index, 12,
                         Session.best_average(12).min,
                         Session.best_average(12).max);
 });
