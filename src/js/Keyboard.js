@@ -1,7 +1,7 @@
 var Event = require('jjtimer-core/src/Event');
 
 var Keyboard = (function(Timer) {
-  var allKeysStop = true;
+  var allKeysStop = false;
   function up(key, fn) { Event.on('keyboard/up/' + key, fn); }
   function down(key, fn) { Event.on('keyboard/down/' + key, fn); }
   function up_handler(ev) {

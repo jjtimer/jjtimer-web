@@ -13,7 +13,7 @@ function hide(id) {
 var Stats = (function(Session) {
   function init() {
     var labels = ['current-avg-5', 'best-avg-5', 'current-avg-12', 'best-avg-12'];
-    var emitFn = function(i) { return function() { Event.emit(i + "/click"); } };
+    var emitFn = function(i) { return function() { Event.emit(i + "/highlight"); } };
     for(var i = 0; i < labels.length; ++i) {
       $(labels[i]).addEventListener('click', emitFn(labels[i]));
     }
