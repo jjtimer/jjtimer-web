@@ -3,7 +3,7 @@ var Storage = require('./Storage')();
 var Session = require('jjtimer-core/src/Session')();
 var Scrambler = require('jjtimer-core/src/Scrambler')();
 var format_time = require('./TimeFormatter');
-var SessionList = require('./SessionList')(Session);
+var SessionList = require('./SessionList')();
 var Stats = require('./Stats')(Session);
 
 var requestAnimationFrame = require('./requestAnimationFrame');
@@ -149,7 +149,7 @@ document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
 Event.on('session/updated', function() {
-  SessionList.render();
+  SessionList.render(Session);
   Stats.render();
   $('right').scrollTop = $('right').scrollHeight;
 });
@@ -209,25 +209,25 @@ window.addEventListener('load', function() {
 });
 
 Event.on('current-avg-5/highlight', function() {
-  SessionList.render(Session.length() - 5, 5,
+  SessionList.render(Session, Session.length() - 5, 5,
                         Session.current_average(5).min,
                         Session.current_average(5).max);
 });
 
 Event.on('best-avg-5/highlight', function() {
-  SessionList.render(Session.best_average(5).index, 5,
+  SessionList.render(Session, Session.best_average(5).index, 5,
                         Session.best_average(5).min,
                         Session.best_average(5).max);
 });
 
 Event.on('current-avg-12/highlight', function() {
-  SessionList.render(Session.length() - 12, 12,
+  SessionList.render(Session, Session.length() - 12, 12,
                         Session.current_average(12).min,
                         Session.current_average(12).max);
 });
 
 Event.on('best-avg-12/highlight', function() {
-  SessionList.render(Session.best_average(12).index, 12,
+  SessionList.render(Session, Session.best_average(12).index, 12,
                         Session.best_average(12).min,
                         Session.best_average(12).max);
 });
