@@ -14,7 +14,6 @@ var SessionFormatter = (function (Session) {
     var root = $('session'), child = null;
     var fragment = document.createDocumentFragment();
     var c = document.createElement('ul');
-    var addComma = false, comma = "";
     for(var i = 0; i < Session.length(); ++i) {
       var sp = document.createElement('li');
       sp.onclick = detail_time;

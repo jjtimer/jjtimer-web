@@ -204,27 +204,32 @@ window.addEventListener('load', function() {
                                function(el) {
     el.addEventListener('click', toggleOptions);
   });
-  $('current-avg-5').addEventListener('click', function() {
-    SessionList.highlight(Session.length() - 5, 5,
-                               Session.current_average(5).min,
-                               Session.current_average(5).max);
-  });
-  $('best-avg-5').addEventListener('click', function() {
-    SessionList.highlight(Session.best_average(5).index, 5,
-                               Session.best_average(5).min,
-                               Session.best_average(5).max);
-  });
-  $('current-avg-12').addEventListener('click', function() {
-    SessionList.highlight(Session.length() - 12, 12,
-                               Session.current_average(12).min,
-                               Session.current_average(12).max);
-  });
-  $('best-avg-12').addEventListener('click', function() {
-    SessionList.highlight(Session.best_average(12).index, 12,
-                               Session.best_average(12).min,
-                               Session.best_average(12).max);
-  });
+  Stats.init();
   Event.emit('session/updated');
+});
+
+Event.on('current-avg-5/click', function() {
+  SessionList.highlight(Session.length() - 5, 5,
+                        Session.current_average(5).min,
+                        Session.current_average(5).max);
+});
+
+Event.on('best-avg-5/click', function() {
+  SessionList.highlight(Session.best_average(5).index, 5,
+                        Session.best_average(5).min,
+                        Session.best_average(5).max);
+});
+
+Event.on('current-avg-12/click', function() {
+  SessionList.highlight(Session.length() - 12, 12,
+                        Session.current_average(12).min,
+                        Session.current_average(12).max);
+});
+
+Event.on('best-avg-12/click', function() {
+  SessionList.highlight(Session.best_average(12).index, 12,
+                        Session.best_average(12).min,
+                        Session.best_average(12).max);
 });
 
 window.addEventListener("beforeunload", function (e) {

@@ -1,3 +1,4 @@
+var Event = require('jjtimer-core/src/Event');
 var format_time = require('./TimeFormatter');
 var $ = document.getElementById.bind(document);
 function show(id) {
@@ -10,6 +11,13 @@ function hide(id) {
 }
 
 var Stats = (function(Session) {
+  function init() {
+    var labels = ['current-avg-5', 'best-avg-5', 'current-avg-12', 'best-avg-12'];
+    var emitFn = function(i) { return function() { Event.emit(i + "/click"); } };
+    for(var i = 0; i < labels.length; ++i) {
+      $(labels[i]).addEventListener('click', emitFn(labels[i]));
+    }
+  }
   function render() {
     $('session-count').textContent = Session.length();
     if (Session.length() < 3) {
@@ -44,6 +52,7 @@ var Stats = (function(Session) {
     slice.call(brs, 0).forEach(fn);
   }
   return {
+    init: init,
     render: render,
     setCompact: setCompact
   };
