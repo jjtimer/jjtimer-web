@@ -23,7 +23,7 @@ var SessionFormatter = (function () {
     for(var i = 0; i < session.length(); ++i) {
       var li = document.createElement('li');
       li.textContent = format_time(session.at(i).time);
-      if (i >= (index) && i <= (index + length)) {
+      if (i >= (index) && i < (index + length)) {
         li.classList.add('highlight-solve');
       }
       if (i == index) {
