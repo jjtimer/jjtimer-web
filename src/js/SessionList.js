@@ -10,14 +10,23 @@ var SessionFormatter = (function (Session) {
     $("detail").classList.toggle("show-detail");
     $("detail").classList.toggle("hide-detail");
   }
-  function render() {
+  function render(index, length, bracket0, bracket1) {
     var root = $('session'), child = null;
     var fragment = document.createDocumentFragment();
     var c = document.createElement('ul');
     for(var i = 0; i < Session.length(); ++i) {
       var sp = document.createElement('li');
       sp.onclick = detail_time;
-      sp.appendChild(document.createTextNode(format_time(Session.at(i).time)));
+      sp.textContent = format_time(Session.at(i).time);
+      if (i >= (index) && i <= (index + length)) {
+        sp.classList.add('highlight-solve');
+      }
+      if (i == index) {
+        sp.classList.add('first');
+      }
+      if (i == (index + bracket0) || i == (index + bracket1)) {
+        sp.textContent = "(" + sp.textContent + ")";
+      }
       sp.id = "t" + i;
       c.appendChild(sp);
     }
@@ -28,28 +37,7 @@ var SessionFormatter = (function (Session) {
       root.appendChild(fragment);
   }
   function highlight(index, length, bracket0, bracket1) {
-    var slice = Array.prototype.slice;
-    var first = $('session').querySelector('.first');
-    if (first) {
-      first.classList.remove('first');
-    }
-    slice.call(document.getElementsByClassName('highlight-solve'), 0).forEach(function(el) {
-      el.classList.remove('highlight-solve');
-    });
-    slice.call(document.getElementsByClassName('bracket'), 0).forEach(function(el) {
-      el.classList.remove('bracket');
-      el.textContent = el.textContent.substr(1, el.textContent.length - 2);
-    });
-    var solveStart = $('t' + index);
-    solveStart.classList.add('first');
-    for(var i = 0; i < length; ++i) {
-      solveStart = $('t' + (index + i));
-      if (i == bracket0 || i == bracket1) {
-        solveStart.classList.add('bracket');
-        solveStart.textContent = "(" + solveStart.textContent + ")";
-      }
-      solveStart.classList.add('highlight-solve');
-    }
+    render(index, length, bracket0, bracket1);
   }
   return {
     render: render,
