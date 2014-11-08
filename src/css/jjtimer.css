@@ -37,6 +37,7 @@ a {
   padding: 0.5%;
   box-sizing: border-box;
   transition: transform 0.5s;
+  position: relative
 }
 
 #options {
@@ -45,6 +46,7 @@ a {
   text-align: left;
   box-sizing: border-box;
   transition: transform 0.5s;
+  position: relative
 }
 
 #time {
