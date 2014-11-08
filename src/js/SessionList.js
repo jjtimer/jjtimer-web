@@ -12,11 +12,11 @@ var SessionFormatter = (function (Session) {
   }
   function render(index, length, bracket0, bracket1) {
     var root = $('session'), child = null;
+    root.addEventListener('click', detail_time);
     var fragment = document.createDocumentFragment();
     var c = document.createElement('ul');
     for(var i = 0; i < Session.length(); ++i) {
       var sp = document.createElement('li');
-      sp.onclick = detail_time;
       sp.textContent = format_time(Session.at(i).time);
       if (i >= (index) && i <= (index + length)) {
         sp.classList.add('highlight-solve');
