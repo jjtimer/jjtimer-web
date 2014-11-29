@@ -73,9 +73,36 @@ Scrambler.register({
   get: generic([["U", "D", "u"], ["R", "L", "r"], ["F", "B", "f"]],
                 ["", "2", "'"], 40)
 });
+
 Scrambler.register({
   name1: "3x3",
   get: generic([["U", "D"], ["R", "L"], ["F", "B"]], ["", "2", "'"], 25)
+});
+
+Scrambler.register({
+  name1: "clock (WCA)",
+  get: function() {
+    function randn(n) { return Math.floor(Math.random() * n); }
+    var scramble = [];
+    var turns=["UR","DR","DL","UL","U","R","D","L","ALL","U","R","D","L","ALL"];
+    for(var i = 0; i < 14; i++){
+      var turn = randn(12) - 5;
+      var clockwise = turn >= 0;
+      turn = Math.abs(turn);
+      scramble.push(turns[i] + turn + (clockwise ? '+' : '-'));
+      if (i == 8){
+        scramble.push('y2');
+      }
+    }
+
+    for(var i = 0; i < 4; ++i) {
+      if (randn(2)) {
+        scramble.push(turns[i]);
+     }
+    }
+
+    return scramble.join(' ');
+  }
 });
 
 var config = {};
