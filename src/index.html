@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>jjtimer</title>
   <script type="text/javascript" src="../build/app.js"></script>
@@ -7,45 +8,64 @@
   <style type="text/css" id="user-style"></style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 </head>
+
 <body>
-<div id="content">
-<div id="left">
-<div id="detail" class="hide-detail"></div>
-<div id="top">
-<div id="time">ready</div>
-<div id="scramble"></div>
-<div id="stats" style="text-align: justify;">
-  <span>times: <span id="session-count">0</span><br /></span>
-  <span id="session-avg-outer">session average: <span id="session-avg">DNF</span><br /></span>
-  <span id="current-avg-all-outer">current average: <a id="current-avg-5">DNF</a><span id="current-avg-12-outer">, <a id="current-avg-12">DNF</a></span><br /></span>
-  <span id="best-avg-all-outer">best average: <a id="best-avg-5">DNF</a><span id="best-avg-12-outer">, <a id="best-avg-12">DNF</a></span><br /></span>
-<a class="options">options</a>
-</div>
-</div>
-<div id="options">
-<p><a class="options">options</a></p>
-<p>
-<h4>Scramble</h4>
-<select id="scramblers"></select>
-<button id="btn-reset">reset</button>
-</p>
-<p>
-<h4>Timer</h4>
-<input type="checkbox" />Stop the timer on any key
-</p>
-<p>
-<h4>UI</h4>
-<input type="checkbox" id="ui-stats-type"><label for="ui-stats-type">Compact stats view</label>
-</p>
-<p>
-<h4>CSS</h4>
-<textarea id="css-input" cols="80" rows="25"></textarea>
-</p>
-</div>
-</div>
-<div id="right">
-<div id="session"></div>
-</div>
-</div>
+  <div id="content">
+    <div id="left">
+      <div id="detail" class="hide-detail">
+        <div id="detailScramble"></div>
+        <div class="buttonWell">
+          <button id="plusTwo" class="btn btn-primary disabled">+2</button>
+          <button id="DNF" class="btn btn-primary disabled">DNF</button>
+          <button id="delete" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+      <div id="top">
+        <div id="time">ready</div>
+        <div id="scramble"></div>
+        <div id="stats" style="text-align: justify;">
+          <span>times: <span id="session-count">0</span>
+          <br />
+          </span>
+          <span id="session-avg-outer">session average: <span id="session-avg">DNF</span>
+          <br />
+          </span>
+          <span id="current-avg-all-outer">current average: <a id="current-avg-5">DNF</a><span id="current-avg-12-outer">, <a id="current-avg-12">DNF</a></span>
+          <br />
+          </span>
+          <span id="best-avg-all-outer">best average: <a id="best-avg-5">DNF</a><span id="best-avg-12-outer">, <a id="best-avg-12">DNF</a></span>
+          <br />
+          </span>
+          <a class="options">options</a>
+        </div>
+      </div>
+      <div id="options">
+        <p><a class="options">options</a>
+        </p>
+        <p>
+          <h4>Scramble</h4>
+          <select id="scramblers"></select>
+          <button id="btn-reset">reset</button>
+        </p>
+        <p>
+          <h4>Timer</h4>
+          <input type="checkbox" />Stop the timer on any key
+        </p>
+        <p>
+          <h4>UI</h4>
+          <input type="checkbox" id="ui-stats-type">
+          <label for="ui-stats-type">Compact stats view</label>
+        </p>
+        <p>
+          <h4>CSS</h4>
+          <textarea id="css-input" cols="80" rows="25"></textarea>
+        </p>
+      </div>
+    </div>
+    <div id="right">
+      <div id="session"></div>
+    </div>
+  </div>
 </body>
+
 </html>

@@ -2,15 +2,23 @@ var format_time = require('./TimeFormatter');
 var $ = document.getElementById.bind(document);
 
 var SessionFormatter = (function () {
+
   var clickFn;
+
   function detail_time(session, ev) {
     var id = parseInt(ev.target.id.substr(1), 10);
     var solve = session.at(id);
-    $('detail').textContent =
-        (id + 1) + ". " + format_time(solve.time) + " " + solve.scramble;
-    $("detail").classList.toggle("show-detail");
-    $("detail").classList.toggle("hide-detail");
+
+    $('detailScramble').textContent =
+        (id + 1) + '. ' + format_time(solve.time) + ' ' + solve.scramble;
+
+    var detailContainer = $('detail');
+    detailContainer.setAttribute('data-solveId', id);
+
+    detailContainer.classList.toggle('show-detail');
+    detailContainer.classList.toggle('hide-detail');
   }
+
   function render(session, index, length, bracket0, bracket1) {
     var root = $('session');
     // Clear the previous listener here, since we bind detail_time to a new

@@ -9,6 +9,7 @@ var Stats = require('./Stats')(Session);
 var requestAnimationFrame = require('./requestAnimationFrame');
 var cancelAnimationFrame = require('./cancelAnimationFrame');
 
+
 function setInterval(fn, delay) {
   // Have to use an object here to store a reference
   // to the requestAnimationFrame ID.
@@ -172,6 +173,8 @@ Keyboard.up(68, function() {
   Event.emit('session/updated');
 });
 
+
+
 document.addEventListener('keydown', Keyboard.down_handler);
 document.addEventListener('keyup', Keyboard.up_handler);
 
@@ -221,6 +224,8 @@ window.addEventListener('load', function() {
     $('user-style').textContent = $('css-input').value;
     return false;
   });
+
+
   $('ui-stats-type').addEventListener('change', function(e) {
     Stats.setCompact(this.checked);
     config['ui-stats-compact'] = this.checked;
@@ -232,6 +237,15 @@ window.addEventListener('load', function() {
     el.addEventListener('click', toggleOptions);
   });
   Stats.init();
+
+  $('delete').addEventListener('click', function() {
+    var detailContainer = $('detail');
+    Session.remove( detailContainer.getAttribute('data-solveId'));
+    detailContainer.classList.toggle("show-detail");
+    detailContainer.classList.toggle("hide-detail");
+    Event.emit('session/updated');
+  });
+
   Event.emit('session/updated');
 });
 

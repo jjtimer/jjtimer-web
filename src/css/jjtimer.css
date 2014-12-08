@@ -76,6 +76,7 @@ a {
   position: fixed;
   width: 70%;
   font-size: 1.5em;
+  z-index: 2;
 }
 
 .hide-detail {
@@ -157,4 +158,80 @@ div:focus {
 
 .disabled {
   color: #ccc !important;
+}
+
+
+.buttonWell {
+  margin-top: 20px;
+}
+
+#detail .buttonWell {
+  text-align: right;
+}
+
+#detailScramble {
+  padding-top: 10px;
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0px;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 16px;
+  font-size: 13px;
+  line-height: 1.846;
+  border-radius: 3px;
+  -moz-user-select: none;
+
+  text-transform: uppercase;
+  border-right: medium none;
+  border-bottom: medium none;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease 0s;
+
+  min-width: 30px;
+}
+
+.btn-primary {
+    background-image: radial-gradient(circle, #3C77ED 80%, #3366CC 81%);
+    background-repeat: no-repeat;
+    background-size: 200% auto;
+    background-position: 50% center;
+    transition: background-size 0.2s ease 0s;
+    color: #FFF;
+    background-color: #3366CC;
+    border-color: transparent;
+}
+
+.btn-primary:hover {
+    background-size: 100% auto;
+    border-color: #0D87E9;
+}
+
+.btn-primary:active {
+    background-color: #3C77ED;
+    background-image: radial-gradient(circle, #3C77ED 10%, #3366CC 11%);
+    background-repeat: no-repeat;
+    background-size: 1000% auto;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* disabled states */
+
+.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled.focus, .btn-primary.focus[disabled], fieldset[disabled] .btn-primary.focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary.active[disabled], fieldset[disabled] .btn-primary.active {
+    background-color: #2196F3;
+    border-color: transparent;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+    box-shadow: none;
 }
